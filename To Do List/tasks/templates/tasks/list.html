@@ -1,0 +1,96 @@
+<head>
+	<!-- Website Title -->
+	<title>TO DO LIST OF IFTY</title>
+  
+	<!-- Import Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+	<!-- Custom Styles -->
+	<style>
+	  /* Global Styles */
+	  body {
+		background-color: #638CB8; /* Set background color to a nice blue */
+	  }
+  
+	  /* Input Field Styles */
+	  input {
+		width: 100%; /* Make input fields full width */
+		padding: 12px 20px; /* Add some padding for better readability */
+		margin: 8px 0; /* Add some margin for spacing */
+		box-sizing: border-box; /* Make sure padding is included in width calculation */
+	  }
+  
+	  /* Placeholder Text Styles */
+	  input::placeholder {
+		color: #d3d3d3; /* Set placeholder text color to a light gray */
+	  }
+  
+	  /* Submit Button Styles */
+	  .submit {
+		background-color: #6BA3E8; /* Set submit button background color to a nice blue */
+	  }
+  
+	  /* Center Column Styles */
+	  .center-column {
+		width: 600px; /* Set center column width to 600px */
+		margin: 20px auto; /* Center column horizontally */
+		padding: 20px; /* Add some padding for better readability */
+		background-color: #fff; /* Set background color to white */
+		border-radius: 3px; /* Add a slight border radius for a nicer look */
+		box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75); /* Add a box shadow for depth */
+	  }
+  
+	  /* Item Row Styles */
+	  .item-row {
+		background-color: #906abd; /* Set item row background color to a nice purple */
+		margin: 10px; /* Add some margin for spacing */
+		padding: 20px; /* Add some padding for better readability */
+		border-radius: 3px; /* Add a slight border radius for a nicer look */
+		color: #fff; /* Set text color to white */
+		font-size: 16px; /* Set font size to 16px */
+		box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75); /* Add a box shadow for depth */
+	  }
+  
+	  /* Danger Button Styles */
+	  .btn-danger {
+		background-color: #ffae19; /* Set danger button background color to a nice orange */
+		border-color: #e59400; /* Set danger button border color to a darker orange */
+	  }
+	</style>
+  </head>
+	
+  <!-- Center Column Container -->
+  <div class="center-column">
+<!-- Headline -->
+<div class="headline">
+	<h1 style="color: #00ffff; font-weight: bold; font-size: 48px; text-align: center; text-shadow: 2px 2px 4px #000; background-color: #7A288A; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+	  TO DO LIST OF IFTY
+	</h1>
+  </div>
+	<!-- Create Task Form -->
+	<form method="POST" action="/">
+	  {% csrf_token %}
+	  {{ form.title }}
+	  <input class="btn btn-info" type="submit" name="Create Task">
+	</form>
+  
+	<!-- Todo List Container -->
+	<div class="todo-list">
+	  {% for task in tasks %}
+		<!-- Item Row Container -->
+		<div class="item-row">
+		  <!-- Update Button -->
+		  <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+		  <!-- Delete Button -->
+		  <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id %}">Delete</a>
+  
+		  <!-- Task Text -->
+		  {% if task.complete == True %}
+			<strike>{{ task }}</strike>
+		  {% else %}
+			<span>{{ task }}</span>
+		  {% endif %}
+		</div>
+	  {% endfor %}
+	</div>
+  </div>
